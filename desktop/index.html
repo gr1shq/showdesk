@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 0;
+      padding: 20px;
+    }
+    #notification {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-width: 350px;
+    }
+    .btn {
+      padding: 8px 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color: white;">SHOWDESK</h1>
+  <p style="color: white;">Press Cmd+K anywhere to get help</p>
+  
+  <div id="notification">
+    <h3 id="notif-title"></h3>
+    <p id="notif-message"></p>
+    <button class="btn" onclick="ignore()">Ignore</button>
+    <button class="btn" onclick="explain()">Explain</button>
+    <button class="btn" onclick="fix()">Fix</button>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    
+    ipcRenderer.on('show-notification', (event, data) => {
+      document.getElementById('notif-title').innerText = data.title;
+      document.getElementById('notif-message').innerText = data.message;
+      document.getElementById('notification').style.display = 'block';
+    });
+
+    function ignore() {
+      document.getElementById('notification').style.display = 'none';
+    }
+
+    function explain() {
+      // Show full explanation
+      alert('Explanation: ' + currentData.explanation);
+    }
+
+    function fix() {
+      // Copy fixed code to clipboard
+      // Or show fix suggestion
+    }
+  </script>
+</body>
+</html>
